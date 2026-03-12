@@ -1,59 +1,142 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🌍 MarocExplorer
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+**MarocExplorer** is a RESTful API built with **Laravel** that allows users to discover and explore Morocco — its destinations, cultural activities, traditional dishes, and custom travel itineraries. Users can create personalised itineraries and save their favourites.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 🚀 Features
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- 🔐 **Authentication** — Register, login, and logout via Laravel Sanctum (token-based)
+- 🗺️ **Itineraires** — Create, view, update, and delete travel itineraries
+- 📍 **Destinations** — Explore Moroccan destinations linked to itineraries
+- 🎭 **Activities** — Discover cultural and tourist activities per destination
+- 🍜 **Dishes** — Browse traditional Moroccan dishes per destination
+- ❤️ **Favourites** — Save and manage favourite itineraries (Many-to-Many)
+- 🔍 **Search** — Search across destinations, activities, and dishes
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## 🏗️ Tech Stack
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+| Layer | Technology |
+|-------|-----------|
+| Framework | Laravel 11 |
+| Auth | Laravel Sanctum |
+| Database | MySQL |
+| Language | PHP 8.x |
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+---
 
-## Laravel Sponsors
+## 📦 Installation
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+```bash
+# Clone the repository
+git clone https://github.com/your-username/MarocExplorer.git
+cd MarocExplorer
 
-### Premium Partners
+# Install dependencies
+composer install
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+# Copy environment file
+cp .env.example .env
 
-## Contributing
+# Generate app key
+php artisan key:generate
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+# Configure your database in .env, then run migrations
+php artisan migrate
 
-## Code of Conduct
+# Start the server
+php artisan serve
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+---
 
-## Security Vulnerabilities
+## 🗄️ Database Schema
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```
+users
+ ├── itineraires       (one-to-many)
+ └── favourites        (many-to-many with itineraires)
 
-## License
+itineraires
+ └── destinations      (one-to-many)
+      ├── activities   (one-to-many)
+      ├── dishes       (one-to-many)
+      └── images       (polymorphic)
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+---
+
+## 📡 API Endpoints
+
+All routes are prefixed with `/api/v1`. Protected routes require a Bearer token.
+
+### Auth
+| Method | Endpoint | Auth | Description |
+|--------|----------|------|-------------|
+| POST | `/register` | ❌ | Register a new user |
+| POST | `/login` | ❌ | Login and get token |
+| POST | `/logout` | ✅ | Logout and revoke token |
+
+### Users
+| Method | Endpoint | Auth | Description |
+|--------|----------|------|-------------|
+| GET | `/users` | ✅ | Get authenticated user |
+| PUT | `/users/{id}` | ✅ | Update user profile |
+| DELETE | `/users/{id}` | ✅ | Delete user account |
+
+### Itineraires
+| Method | Endpoint | Auth | Description |
+|--------|----------|------|-------------|
+| GET | `/itineraires` | ✅ | List all itineraries |
+| POST | `/itineraires` | ✅ | Create an itinerary |
+| GET | `/itineraires/{id}` | ✅ | Get a single itinerary |
+| PUT | `/itineraires/{id}` | ✅ | Update an itinerary |
+| DELETE | `/itineraires/{id}` | ✅ | Delete an itinerary |
+| GET | `/itineraires/search/{query}` | ✅ | Search itineraries |
+
+### Destinations
+| Method | Endpoint | Auth | Description |
+|--------|----------|------|-------------|
+| GET | `/destinations` | ✅ | List all destinations |
+| GET | `/destinations/{id}` | ✅ | Get a destination |
+| GET | `/destinations/search/{query}` | ✅ | Search destinations |
+
+### Activities
+| Method | Endpoint | Auth | Description |
+|--------|----------|------|-------------|
+| GET | `/activities` | ✅ | List all activities |
+| GET | `/activities/{id}` | ✅ | Get an activity |
+| GET | `/activities/search/{query}` | ✅ | Search activities |
+
+### Dishes
+| Method | Endpoint | Auth | Description |
+|--------|----------|------|-------------|
+| GET | `/dishes` | ✅ | List all dishes |
+| GET | `/dishes/{id}` | ✅ | Get a dish |
+| GET | `/dishes/search/{query}` | ✅ | Search dishes |
+
+### Favourites
+| Method | Endpoint | Auth | Description |
+|--------|----------|------|-------------|
+| GET | `/favourites` | ✅ | List user's favourite itineraries |
+| POST | `/favourites/{itineraire}` | ✅ | Toggle favourite (add/remove) |
+| GET | `/favourites/{itineraire}/check` | ✅ | Check if itinerary is favourited |
+
+---
+
+## 🔐 Authentication
+
+This API uses **Laravel Sanctum** for token-based authentication.
+
+Include the token in every protected request:
+```
+Authorization: Bearer YOUR_TOKEN_HERE
+```
+
+---
+
+## 👤 Author
+
+Built by Tariq Bahaz.
