@@ -8,6 +8,7 @@ use App\Http\Controllers\DestinationController;
 use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\DishController;
 use App\Http\Controllers\ItineraireController;
+use App\Http\Controllers\FavouriteController;
 
 /********** API Routes **********/
 Route::prefix('v1')->group(function () {
@@ -29,7 +30,7 @@ Route::prefix('v1')->group(function () {
         Route::get('/destinations', [DestinationController::class, 'index']);
         Route::get('/destinations/{id}', [DestinationController::class, 'show']);
         Route::get('/destinations/search/{query}', [DestinationController::class, 'search']);
-        
+
         // Activities
         Route::get('/activities', [ActivityController::class, 'index']);
         Route::get('/activities/{id}', [ActivityController::class, 'show']);
@@ -46,7 +47,12 @@ Route::prefix('v1')->group(function () {
         Route::get('/itineraires/{id}', [ItineraireController::class, 'show']);
         Route::put('/itineraires/{id}', [ItineraireController::class, 'update']);
         Route::delete('/itineraires/{id}', [ItineraireController::class, 'destroy']);
-        Route::get('/itineraires/search/{query}', [ItineraireController::class, 'search']);   
+        Route::get('/itineraires/search/{query}', [ItineraireController::class, 'search']);
+
+        // Favourites
+        Route::get('/favourites', [FavouriteController::class, 'index']);
+        Route::post('/favourites/{itineraire}', [FavouriteController::class, 'toggle']);
+        Route::get('/favourites/{itineraire}/check', [FavouriteController::class, 'check']);
 
     });
 

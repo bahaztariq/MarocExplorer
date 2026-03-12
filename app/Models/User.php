@@ -46,4 +46,14 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function favouriteItineraires()
+    {
+        return $this->belongsToMany(itineraire::class, 'favourites', 'user_id', 'itinerary_id');
+    }
+
+    public function itineraries()
+    {
+        return $this->hasMany(Itinerary::class);
+    }
 }
