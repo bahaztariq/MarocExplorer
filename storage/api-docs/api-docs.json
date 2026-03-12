@@ -1,0 +1,31 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "MAROC EXPLORER API",
+        "description": "This is the API documentation for the MAROC EXPLORER API. It handles webhook requests and responses, allowing users to generate and display data dynamically.",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/v1/itineraires": {
+            "get": {
+                "tags": [
+                    "Itineraires"
+                ],
+                "summary": "Display a listing of all itineraires",
+                "description": "Returns a list of all itineraires with their associated data.",
+                "operationId": "6b60255d8d64f2182046d68efa480ff9",
+                "responses": {
+                    "200": {
+                        "description": "Itineraires fetched successfully."
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Itineraires",
+            "description": "Itineraires"
+        }
+    ]
+}

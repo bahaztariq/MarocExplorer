@@ -4,12 +4,27 @@ namespace App\Http\Controllers;
 
 use App\Models\itineraire;
 use Illuminate\Http\Request;
+use OpenApi\Attributes as OA;
 
 class ItineraireController extends Controller
 {
     /**
      * Display a listing of all itineraires.
      */
+
+    #[OA\Get(
+        summary: "Display a listing of all itineraires",
+        description: "Returns a list of all itineraires with their associated data.",
+        path: "/api/v1/itineraires",
+        tags: ["Itineraires"],
+        responses: [
+            new OA\Response(
+                response: 200,
+                description: "Itineraires fetched successfully.",
+            )
+            ],
+    )]
+                
     public function index()
     {
         $itineraires = itineraire::with([
