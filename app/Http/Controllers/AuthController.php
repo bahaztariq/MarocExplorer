@@ -3,8 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Requests\LoginRequest;
-use App\Http\Requests\SignUpRequest;
+use App\Http\Requests\StoreUserRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
@@ -12,21 +11,12 @@ use Illuminate\Support\Facades\Auth;
 class AuthController extends Controller
 {
     
-    public function register(Request $request)
+    public function register(StoreUserRequest $request)
     {
 
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8',
-        ]);
+        $validatedData = $request->validated();
         
-        $user = User::create([
-            'name' => $validatedData['name'],
-            'email' => $validatedData['email'],
-            'password' => Hash::make($validatedData['password']),
-            
-        ]);
+        $user = User::create($validatedData);
 
         $token = $user->createToken('api-token')->plainTextToken;
 
@@ -48,7 +38,7 @@ class AuthController extends Controller
 
         if(!$user || !Hash::check($validatedData['password'], $user->password)) {
             return response()->json([
-                'message' => 'Invalide credentials',
+                'message' => 'Invalid credentials',
             ], 401);
         };
 
