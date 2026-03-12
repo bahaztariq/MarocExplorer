@@ -38,4 +38,19 @@ class ActivityController extends Controller
             'activity' => $activity,
         ], 200);
     }
+
+    /**
+     * Search for activities by name.
+     */
+    public function search($query)
+    {
+        $activities = activity::where('name', 'like', "%$query%")
+            ->with('destination')
+            ->get();
+        
+        return response()->json([
+            'message' => 'Search results fetched successfully.',
+            'activities' => $activities,
+        ], 200);
+    }
 }

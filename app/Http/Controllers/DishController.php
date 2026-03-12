@@ -38,4 +38,18 @@ class DishController extends Controller
             'dish' => $dish,
         ], 200);
     }
+
+    /**
+     * Search for dishes by name.
+     */
+    public function search($query)
+    {
+        $dishes = dish::where('name', 'like', "%$query%")
+            ->with('destination')
+            ->get();
+        return response()->json([
+            'message' => 'Search results fetched successfully.',
+            'dishes' => $dishes,
+        ], 200);
+    }
 }

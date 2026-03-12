@@ -126,4 +126,23 @@ class ItineraireController extends Controller
             'message' => 'Itineraire deleted successfully.',
         ], 200);
     }
+
+    /**
+     * Search itineraires by title or category.
+     */
+    public function search($query)
+    {
+        $itineraires = itineraire::where('title', 'like', "%$query%")
+            ->orWhere('category', 'like', "%$query%")
+            ->orwhere('duration', 'like', "%$query%")
+            ->with([
+                'destination.activities',
+                'destination.dishes',
+            ])->get();
+
+        return response()->json([
+            'message' => 'Itineraires found.',
+            'itineraires' => $itineraires,
+        ], 200);
+    }
 }

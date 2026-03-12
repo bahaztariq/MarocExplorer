@@ -38,4 +38,20 @@ class DestinationController extends Controller
             'destination' => $destination,
         ], 200);
     }
+
+
+    /**
+     * Search for destinations by name.
+     */
+    public function search($query)
+    {
+        $destinations = destination::where('name', 'like', "%$query%")
+            ->with(['activities', 'dishes'])
+            ->get();
+        
+        return response()->json([
+            'message' => 'Search results fetched successfully.',
+            'destinations' => $destinations,
+        ], 200);
+    }
 }

@@ -28,14 +28,17 @@ Route::prefix('v1')->group(function () {
         // Destinations
         Route::get('/destinations', [DestinationController::class, 'index']);
         Route::get('/destinations/{id}', [DestinationController::class, 'show']);
-
+        Route::get('/destinations/search/{query}', [DestinationController::class, 'search']);
+        
         // Activities
         Route::get('/activities', [ActivityController::class, 'index']);
         Route::get('/activities/{id}', [ActivityController::class, 'show']);
+        Route::get('/activities/search/{query}', [ActivityController::class, 'search']);
 
         // Dishes
         Route::get('/dishes', [DishController::class, 'index']);
         Route::get('/dishes/{id}', [DishController::class, 'show']);
+        Route::get('/dishes/search/{query}', [DishController::class, 'search']);
 
         // Itineraires
         Route::get('/itineraires', [ItineraireController::class, 'index']);
@@ -43,6 +46,7 @@ Route::prefix('v1')->group(function () {
         Route::get('/itineraires/{id}', [ItineraireController::class, 'show']);
         Route::put('/itineraires/{id}', [ItineraireController::class, 'update']);
         Route::delete('/itineraires/{id}', [ItineraireController::class, 'destroy']);
+        Route::get('/itineraires/search/{query}', [ItineraireController::class, 'search']);   
 
     });
 
