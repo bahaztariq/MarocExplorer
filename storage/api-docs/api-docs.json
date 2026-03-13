@@ -6,6 +6,803 @@
         "version": "1.0.0"
     },
     "paths": {
+        "/api/v1/activities": {
+            "get": {
+                "tags": [
+                    "Activities"
+                ],
+                "summary": "Display a listing of all activities",
+                "description": "Returns a list of all activities with their associated destination.",
+                "operationId": "9d6fc7cda8d88babd7b7ad35e545b242",
+                "responses": {
+                    "200": {
+                        "description": "Activities fetched successfully."
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Activities"
+                ],
+                "summary": "Store a new activity",
+                "description": "Creates a new activity and returns it.",
+                "operationId": "a5a5be597be82ddc130319849bdf73f9",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "nom",
+                                    "destination_id"
+                                ],
+                                "properties": {
+                                    "nom": {
+                                        "type": "string",
+                                        "example": "Hiking"
+                                    },
+                                    "destination_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Activity created successfully."
+                    },
+                    "422": {
+                        "description": "Validation error."
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/activities/{id}": {
+            "get": {
+                "tags": [
+                    "Activities"
+                ],
+                "summary": "Display a specific activity",
+                "description": "Returns a specific activity with its associated destination.",
+                "operationId": "5310e750b75756c2ac8946ac55013a14",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The ID of the activity",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Activity fetched successfully."
+                    },
+                    "404": {
+                        "description": "Activity not found."
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Activities"
+                ],
+                "summary": "Update an existing activity",
+                "description": "Updates a specific activity and returns it.",
+                "operationId": "f99141981642032579b60b058c8a3ef1",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The ID of the activity",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "nom": {
+                                        "type": "string",
+                                        "example": "Hiking Updated"
+                                    },
+                                    "destination_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Activity updated successfully."
+                    },
+                    "404": {
+                        "description": "Activity not found."
+                    },
+                    "422": {
+                        "description": "Validation error."
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/activities/search/{query}": {
+            "get": {
+                "tags": [
+                    "Activities"
+                ],
+                "summary": "Search activities",
+                "description": "Search for activities by name.",
+                "operationId": "30557520cf991e5dc85cf127db685632",
+                "parameters": [
+                    {
+                        "name": "query",
+                        "in": "path",
+                        "description": "The search query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Search results fetched successfully."
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/register": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "User Registration",
+                "description": "Registers a new user and returns an access token.",
+                "operationId": "6796c44e1f6079c411abbfed066c5907",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "email",
+                                    "password",
+                                    "password_confirmation"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "John Doe"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "john@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "password123"
+                                    },
+                                    "password_confirmation": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "password123"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "User registered successfully."
+                    },
+                    "422": {
+                        "description": "Validation error."
+                    }
+                }
+            }
+        },
+        "/api/v1/login": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "User Login",
+                "description": "Authenticates a user and returns an access token.",
+                "operationId": "da2ca4d7a5cdec77b8b45a20373535cb",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "john@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "password123"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Login successful."
+                    },
+                    "401": {
+                        "description": "Invalid credentials."
+                    }
+                }
+            }
+        },
+        "/api/v1/logout": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "User Logout",
+                "description": "Invalidates the user's access token.",
+                "operationId": "c4eddaf1a2e990cc90e4326c0d731d41",
+                "responses": {
+                    "200": {
+                        "description": "Logout successful."
+                    },
+                    "401": {
+                        "description": "No authenticated user found."
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/destinations": {
+            "get": {
+                "tags": [
+                    "Destinations"
+                ],
+                "summary": "Display a listing of all destinations",
+                "description": "Returns a list of all destinations with their associated activities and dishes.",
+                "operationId": "27fd12df2befee89549ebd10d33bae69",
+                "responses": {
+                    "200": {
+                        "description": "Destinations fetched successfully."
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Destinations"
+                ],
+                "summary": "Store a new destination",
+                "description": "Creates a new destination and returns it.",
+                "operationId": "9e07e09ca0eb956a07abd3ec5261db1d",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "description",
+                                    "itineraire_id"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Chefchaouen"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "The Blue City"
+                                    },
+                                    "image": {
+                                        "type": "string",
+                                        "example": "chefchaouen.jpg",
+                                        "nullable": true
+                                    },
+                                    "itineraire_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Destination created successfully."
+                    },
+                    "422": {
+                        "description": "Validation error."
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/destinations/{id}": {
+            "get": {
+                "tags": [
+                    "Destinations"
+                ],
+                "summary": "Display a specific destination",
+                "description": "Returns a specific destination with its associated activities and dishes.",
+                "operationId": "d80273c09a14d27732106d2dd4fd870a",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The ID of the destination",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Destination fetched successfully."
+                    },
+                    "404": {
+                        "description": "Destination not found."
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Destinations"
+                ],
+                "summary": "Update an existing destination",
+                "description": "Updates a specific destination and returns it.",
+                "operationId": "aa3106e5ea76ffc863ffde4db28bc0e9",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The ID of the destination",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Chefchaouen Updated"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "The Blue City Updated"
+                                    },
+                                    "image": {
+                                        "type": "string",
+                                        "example": "chefchaouen_new.jpg",
+                                        "nullable": true
+                                    },
+                                    "itineraire_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Destination updated successfully."
+                    },
+                    "404": {
+                        "description": "Destination not found."
+                    },
+                    "422": {
+                        "description": "Validation error."
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/destinations/search/{query}": {
+            "get": {
+                "tags": [
+                    "Destinations"
+                ],
+                "summary": "Search destinations",
+                "description": "Search for destinations by name.",
+                "operationId": "c90e3855b473843fe2194fec1db6814f",
+                "parameters": [
+                    {
+                        "name": "query",
+                        "in": "path",
+                        "description": "The search query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Search results fetched successfully."
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/dishes": {
+            "get": {
+                "tags": [
+                    "Dishes"
+                ],
+                "summary": "Display a listing of all dishes",
+                "description": "Returns a list of all dishes with their associated destination.",
+                "operationId": "8870280d913413cd144c2f11136265ed",
+                "responses": {
+                    "200": {
+                        "description": "Dishes fetched successfully."
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Dishes"
+                ],
+                "summary": "Store a new dish",
+                "description": "Creates a new dish and returns it.",
+                "operationId": "0386fcce212bf5a7b3da7e98fb67bad3",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "description",
+                                    "destination_id"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Couscous"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "Traditional Moroccan dish"
+                                    },
+                                    "image": {
+                                        "type": "string",
+                                        "example": "couscous.jpg",
+                                        "nullable": true
+                                    },
+                                    "destination_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Dish created successfully."
+                    },
+                    "422": {
+                        "description": "Validation error."
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/dishes/{id}": {
+            "get": {
+                "tags": [
+                    "Dishes"
+                ],
+                "summary": "Display a specific dish",
+                "description": "Returns a specific dish with its associated destination.",
+                "operationId": "d11396e8daa88f2988da4a3b5a3a85ec",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The ID of the dish",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Dish fetched successfully."
+                    },
+                    "404": {
+                        "description": "Dish not found."
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Dishes"
+                ],
+                "summary": "Update an existing dish",
+                "description": "Updates a specific dish and returns it.",
+                "operationId": "3fe03e4e62306720eb569b0a830cce40",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The ID of the dish",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Couscous Updated"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "Traditional Moroccan dish Updated"
+                                    },
+                                    "image": {
+                                        "type": "string",
+                                        "example": "couscous_new.jpg",
+                                        "nullable": true
+                                    },
+                                    "destination_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Dish updated successfully."
+                    },
+                    "404": {
+                        "description": "Dish not found."
+                    },
+                    "422": {
+                        "description": "Validation error."
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/dishes/search/{query}": {
+            "get": {
+                "tags": [
+                    "Dishes"
+                ],
+                "summary": "Search dishes",
+                "description": "Search for dishes by name.",
+                "operationId": "4599c0771c653b0d2ab4d724596306f3",
+                "parameters": [
+                    {
+                        "name": "query",
+                        "in": "path",
+                        "description": "The search query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Search results fetched successfully."
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/favourites": {
+            "get": {
+                "tags": [
+                    "Favourites"
+                ],
+                "summary": "Display favourited itineraires",
+                "description": "Returns a list of all itineraires favourited by the authenticated user.",
+                "operationId": "59b3af8037e9d17e03b96d36ea411d8a",
+                "responses": {
+                    "200": {
+                        "description": "Favourites fetched successfully."
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/favourites/{itineraire}": {
+            "post": {
+                "tags": [
+                    "Favourites"
+                ],
+                "summary": "Toggle favourite",
+                "description": "Adds or removes an itineraire from the authenticated user's favourites.",
+                "operationId": "3075fb56ba7c52cf41ebe288f8eb20b6",
+                "parameters": [
+                    {
+                        "name": "itineraire",
+                        "in": "path",
+                        "description": "The ID of the itineraire",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Favourited state toggled successfully."
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/favourites/{itineraire}/check": {
+            "get": {
+                "tags": [
+                    "Favourites"
+                ],
+                "summary": "Check favourite state",
+                "description": "Returns whether a specific itineraire is favourited by the authenticated user.",
+                "operationId": "1a71585f946d526cb9f3152f5103dd03",
+                "parameters": [
+                    {
+                        "name": "itineraire",
+                        "in": "path",
+                        "description": "The ID of the itineraire",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Favourite state checked successfully."
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
         "/api/v1/itineraires": {
             "get": {
                 "tags": [
@@ -18,14 +815,540 @@
                     "200": {
                         "description": "Itineraires fetched successfully."
                     }
-                }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Itineraires"
+                ],
+                "summary": "Store a newly created itineraire",
+                "description": "Creates a new itineraire and returns the created record.",
+                "operationId": "ba1645a770c7ac4c8fd9b7ab28363677",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "title",
+                                    "category",
+                                    "duration",
+                                    "image"
+                                ],
+                                "properties": {
+                                    "title": {
+                                        "type": "string",
+                                        "example": "Exploring Marrakech"
+                                    },
+                                    "category": {
+                                        "type": "string",
+                                        "example": "Cultural"
+                                    },
+                                    "duration": {
+                                        "type": "string",
+                                        "example": "3 days"
+                                    },
+                                    "image": {
+                                        "type": "string",
+                                        "example": "marrakech.jpg"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Itineraire created successfully."
+                    },
+                    "401": {
+                        "description": "Unauthorized."
+                    },
+                    "422": {
+                        "description": "Validation error."
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/itineraires/{id}": {
+            "get": {
+                "tags": [
+                    "Itineraires"
+                ],
+                "summary": "Display a specific itineraire",
+                "description": "Returns a specific itineraire with its associated data.",
+                "operationId": "bfeb5668e786cc44fa25592da5bcb544",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The ID of the itineraire",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Itineraire fetched successfully."
+                    },
+                    "404": {
+                        "description": "Itineraire not found."
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Itineraires"
+                ],
+                "summary": "Update the specified itineraire",
+                "description": "Updates a specific itineraire and returns the updated record.",
+                "operationId": "3a952bd0498de6b327ead7520ecf7acb",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The ID of the itineraire",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "title": {
+                                        "type": "string",
+                                        "example": "Updated Title"
+                                    },
+                                    "category": {
+                                        "type": "string",
+                                        "example": "Updated Category"
+                                    },
+                                    "duration": {
+                                        "type": "string",
+                                        "example": "4 days"
+                                    },
+                                    "image": {
+                                        "type": "string",
+                                        "example": "updated.jpg"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Itineraire updated successfully."
+                    },
+                    "403": {
+                        "description": "Unauthorized."
+                    },
+                    "404": {
+                        "description": "Itineraire not found."
+                    },
+                    "422": {
+                        "description": "Validation error."
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Itineraires"
+                ],
+                "summary": "Remove the specified itineraire",
+                "description": "Deletes a specific itineraire.",
+                "operationId": "d7b1290f0756075ad8db19d63dc49505",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The ID of the itineraire",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Itineraire deleted successfully."
+                    },
+                    "403": {
+                        "description": "Unauthorized."
+                    },
+                    "404": {
+                        "description": "Itineraire not found."
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/itineraires/search/{query}": {
+            "get": {
+                "tags": [
+                    "Itineraires"
+                ],
+                "summary": "Search itineraires",
+                "description": "Search itineraires by title or category or duration.",
+                "operationId": "f7a1401845c5be02d586b776aff5db5b",
+                "parameters": [
+                    {
+                        "name": "query",
+                        "in": "path",
+                        "description": "The search query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Itineraires found."
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/users": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Display the authenticated user's profile",
+                "description": "Returns the authenticated user's data.",
+                "operationId": "a083451ec511618b5addac9e32ff62a1",
+                "responses": {
+                    "200": {
+                        "description": "User fetched successfully."
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/users/{id}": {
+            "put": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Update user profile",
+                "description": "Updates the profile of a specific user. Authenticated user must own the profile.",
+                "operationId": "59e98fba99e974815e27979dd58e2175",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The ID of the user",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "John Doe"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "example": "john@example.com"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User updated successfully."
+                    },
+                    "403": {
+                        "description": "Unauthorized."
+                    },
+                    "404": {
+                        "description": "User not found."
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Delete user account",
+                "description": "Deletes a specific user account. Authenticated user must own the account.",
+                "operationId": "c30c64b8b7730b65c7714c9af4a6f5fa",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The ID of the user",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User deleted successfully."
+                    },
+                    "403": {
+                        "description": "Unauthorized."
+                    },
+                    "404": {
+                        "description": "User not found."
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "User": {
+                "title": "User",
+                "description": "User model",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "Activity": {
+                "title": "Activity",
+                "description": "Activity model",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "nom": {
+                        "type": "string"
+                    },
+                    "destination_id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "Destination": {
+                "title": "Destination",
+                "description": "Destination model",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "image": {
+                        "type": "string"
+                    },
+                    "itineraire_id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "Dish": {
+                "title": "Dish",
+                "description": "Dish model",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "image": {
+                        "type": "string"
+                    },
+                    "destination_id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "Itineraire": {
+                "title": "Itineraire",
+                "description": "Itineraire model",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "category": {
+                        "type": "string"
+                    },
+                    "duration": {
+                        "type": "string"
+                    },
+                    "image": {
+                        "type": "string"
+                    },
+                    "user_id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "securitySchemes": {
+            "sanctum": {
+                "type": "http",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
             }
         }
     },
     "tags": [
         {
+            "name": "Activities",
+            "description": "Activities"
+        },
+        {
+            "name": "Authentication",
+            "description": "Authentication"
+        },
+        {
+            "name": "Destinations",
+            "description": "Destinations"
+        },
+        {
+            "name": "Dishes",
+            "description": "Dishes"
+        },
+        {
+            "name": "Favourites",
+            "description": "Favourites"
+        },
+        {
             "name": "Itineraires",
             "description": "Itineraires"
+        },
+        {
+            "name": "Users",
+            "description": "Users"
         }
     ]
 }

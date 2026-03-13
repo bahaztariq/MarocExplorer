@@ -28,17 +28,23 @@ Route::prefix('v1')->group(function () {
 
         // Destinations
         Route::get('/destinations', [DestinationController::class, 'index']);
+        Route::post('/destinations', [DestinationController::class, 'store']);
         Route::get('/destinations/{id}', [DestinationController::class, 'show']);
+        Route::put('/destinations/{id}', [DestinationController::class, 'update']);
         Route::get('/destinations/search/{query}', [DestinationController::class, 'search']);
 
         // Activities
         Route::get('/activities', [ActivityController::class, 'index']);
+        Route::post('/activities', [ActivityController::class, 'store']);
         Route::get('/activities/{id}', [ActivityController::class, 'show']);
+        Route::put('/activities/{id}', [ActivityController::class, 'update']);
         Route::get('/activities/search/{query}', [ActivityController::class, 'search']);
 
         // Dishes
         Route::get('/dishes', [DishController::class, 'index']);
+        Route::post('/dishes', [DishController::class, 'store']);
         Route::get('/dishes/{id}', [DishController::class, 'show']);
+        Route::put('/dishes/{id}', [DishController::class, 'update']);
         Route::get('/dishes/search/{query}', [DishController::class, 'search']);
 
         // Itineraires
